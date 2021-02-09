@@ -1,0 +1,34 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Server_display.gd" type="Script" id=1]
+[ext_resource path="res://Base_font.tres" type="DynamicFont" id=2]
+
+[node name="Server_display" type="Label" groups=[
+"Server_display",
+]]
+anchor_right = 1.0
+margin_right = -220.0
+margin_bottom = 130.0
+rect_min_size = Vector2( 0, 130 )
+custom_fonts/font = ExtResource( 2 )
+text = "N/A : 000.000.000"
+align = 1
+valign = 1
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Join_button" type="Button" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -302.0
+margin_top = 13.0
+margin_bottom = -13.0
+custom_fonts/font = ExtResource( 2 )
+text = "Join"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Join_button" to="." method="_on_Join_button_pressed"]
