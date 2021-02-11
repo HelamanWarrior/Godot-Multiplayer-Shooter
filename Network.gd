@@ -56,6 +56,8 @@ func reset_network_connection() -> void:
 
 func _connected_to_server() -> void:
 	print("Successfully connected to the server")
+	
+	client_connected_to_server = true
 
 func _server_disconnected() -> void:
 	print("Disconnected from the server")
