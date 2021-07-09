@@ -22,11 +22,20 @@ func _ready() -> void:
 	client_connection_timeout_timer.one_shot = true
 	
 	client_connection_timeout_timer.connect("timeout", self, "_client_connection_timeout")
-	
+
 	for ip in IP.get_local_addresses():
-		if ip.begins_with("192.168.") and not ip.ends_with(".1"):
-			ip_address = ip
-			break
+		var ip_parts = []
+		for part in ip.split("."):
+			ip_parts.push_back(part.to_int())
+
+		match ip_parts:
+			[172, ..]:
+				if ip_parts[1] in range(16, 32):
+					ip_address = ip
+					break
+			[192, 168, ..], [10, ..]:
+				ip_address = ip
+				break
 	
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
