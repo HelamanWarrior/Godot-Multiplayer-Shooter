@@ -118,9 +118,11 @@ func puppet_username_set(new_value) -> void:
 func _network_peer_connected(id) -> void:
 	rset_id(id, "puppet_username", username)
 
+# Si hay fallos en la conexión
 func _on_Network_tick_rate_timeout():
 	if get_tree().has_network_peer():
 		if is_network_master():
+			# La posición del player será la que diga el servidor. La velocidad y la rotación será la propia. 
 			rset_unreliable("puppet_position", global_position)
 			rset_unreliable("puppet_velocity", velocity)
 			rset_unreliable("puppet_rotation", rotation)

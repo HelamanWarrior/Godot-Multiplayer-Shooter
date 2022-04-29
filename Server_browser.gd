@@ -20,7 +20,9 @@ func _on_Server_listener_remove_server(serverIp):
 				serverNode.queue_free()
 				break
 
+# cuando pulsamos el boton de manual setup, dependiendo de si muestra un texto u otro se muestran y esconden una serie de nodos en la escena
 func _on_Manual_setup_pressed():
+	
 	if manual_setup_button.text != "exit setup":
 		server_ip_text_edit.show()
 		manual_setup_button.text = "exit setup"

@@ -14,15 +14,18 @@ var client_connected_to_server = false
 var networked_object_name_index = 0 setget networked_object_name_index_set
 puppet var puppet_networked_object_name_index = 0 setget puppet_networked_object_name_index_set
 
+# creamos un timer que iniciará cuando se ejecute la funcion joinServer
 onready var client_connection_timeout_timer = Timer.new()
 
 func _ready() -> void:
+	# añadimos el timer i iniciamos a 10 segundos. con el one_shot le decimos que solo se ejecute una vez
 	add_child(client_connection_timeout_timer)
 	client_connection_timeout_timer.wait_time = 10
 	client_connection_timeout_timer.one_shot = true
 	
 	client_connection_timeout_timer.connect("timeout", self, "_client_connection_timeout")
 	
+	# Teniendo en cuenta que se podrá jugar en distintos sistemas operativos y que en cada uno la ip que se quiere esta en una posición distinta, hacemos una criba para que no haya errores
 	if OS.get_name() == "Windows":
 		ip_address = IP.get_local_addresses()[3]
 	elif OS.get_name() == "Android":
@@ -30,14 +33,19 @@ func _ready() -> void:
 	else:
 		ip_address = IP.get_local_addresses()[3]
 	
+	# una vez tenemos el array de local adresses buscaremos aquella que corresponda con la conexión wlan que use el cliente
+	# para hacerlo descartamos todas aquellas que no empiezan por 192.168 y descartamos tambien las que acaban en 1 como 127.0.0.1 o 192.168.X.1
 	for ip in IP.get_local_addresses():
 		if ip.begins_with("192.168.") and not ip.ends_with(".1"):
+			# La ip que cumple los requisitos pasa a ser la ip_adress del servidor
 			ip_address = ip
 	
+	# Existen varios casos que se pueden dar. que el usuario se conecte al servidor, que el servidor se desconecte y que la conexión falle
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	get_tree().connect("server_disconnected", self, "_server_disconnected")
 	get_tree().connect("connection_failed", self, "_connection_failed")
 
+# creamos el servidor
 func create_server() -> void:
 	server = NetworkedMultiplayerENet.new()
 	server.create_server(DEFAULT_PORT, MAX_CLIENTS)
@@ -48,7 +56,7 @@ func join_server() -> void:
 	client = NetworkedMultiplayerENet.new()
 	client.create_client(ip_address, DEFAULT_PORT)
 	get_tree().set_network_peer(client)
-	client_connection_timeout_timer.start()
+	client_connection_timeout_timer.start()  # Esto es 
 
 func reset_network_connection() -> void:
 	if get_tree().has_network_peer():

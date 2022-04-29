@@ -12,7 +12,9 @@ func _enter_tree():
 	broadcast_timer.one_shot = false
 	broadcast_timer.autostart = true
 	
+	# si el usuario de este cliente tiene el servidor del juego
 	if get_tree().is_network_server():
+		# Añadimos el timer como un nuevo hijo
 		add_child(broadcast_timer)
 		broadcast_timer.connect("timeout", self, "broadcast")
 		
@@ -20,6 +22,7 @@ func _enter_tree():
 		socket_udp.set_broadcast_enabled(true)
 		socket_udp.set_dest_address('255.255.255.255', broadcast_port)
 
+# enviamos paquetes
 func broadcast():
 	server_info.name = Network.current_player_username
 	var packet_message = to_json(server_info)
