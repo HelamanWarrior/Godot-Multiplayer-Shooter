@@ -85,10 +85,17 @@ func _on_Join_server_pressed():
 		# instanciamos la escena Server_browser 
 		Global.instance_node(load("res://Server_browser.tscn"), self)
 
-
+# Al conectarse al servidor (entramos al waiting room)
 func _connected_to_server() -> void:
 	yield(get_tree().create_timer(0.1), "timeout")
 	instance_player(get_tree().get_network_unique_id())
+	
+	# Con este for, activamos el disparo en el waiting room para cada player
+	for child in Persistent_nodes.get_children():
+		if child.is_in_group("Player"):
+			# activamos los disparos ya que en la sala de espera no hay pistolas ni ataques
+			child.update_shoot_mode(true)
+	# TODO: Añadir el respawn automatico en el waiting room a continuación  
 
 # inicia la instancia de player y le da los atributos necesarios
 func instance_player(id) -> void:
