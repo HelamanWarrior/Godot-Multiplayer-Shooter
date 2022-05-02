@@ -102,6 +102,14 @@ position = Vector2( 2048, 512 )
 [node name="6" type="Position2D" parent="Spawn_locations"]
 position = Vector2( 2048, 1792 )
 
+[node name="enemy_spawn_timer" type="Timer" parent="."]
+wait_time = 2.094
+
+[node name="Spawn_enemy" type="Node" parent="."]
+
+[node name="1" type="Position2D" parent="Spawn_enemy"]
+position = Vector2( 2054.89, 100.935 )
+
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
 
@@ -111,6 +119,10 @@ script = ExtResource( 7 )
 [node name="Control" type="Control" parent="Game_UI"]
 anchor_right = 1.0
 anchor_bottom = 1.0
+margin_left = -36.3032
+margin_top = 698.837
+margin_right = -36.3032
+margin_bottom = 698.837
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -136,4 +148,5 @@ __meta__ = {
 
 [node name="Win_timer" type="Timer" parent="Game_UI/Control/Winner"]
 wait_time = 2.0
+[connection signal="timeout" from="enemy_spawn_timer" to="." method="_on_enemy_spawn_timer_timeout"]
 [connection signal="timeout" from="Game_UI/Control/Winner/Win_timer" to="Game_UI/Control/Winner" method="_on_Win_timer_timeout"]

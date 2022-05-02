@@ -1,5 +1,5 @@
 extends Node2D
-
+export (PackedScene) var enemy
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
@@ -9,6 +9,9 @@ func _ready() -> void:
 	
 	if get_tree().is_network_server():
 		setup_players_positions()
+	
+	$enemy_spawn_timer.start()
+	
 
 # Cuando el usuario esta hosteando la partida se llama a esta función para que establezca las posiciones de spawn
 func setup_players_positions() -> void:
@@ -33,5 +36,6 @@ func _player_disconnected(id) -> void:
 
 
 func _on_enemy_spawn_timer_timeout():
-	var enemy= enemigo1
+	var enemy= enemy.instance()
+	enemy.inicio($Spawn_enemy/1.position) 
 

@@ -42,6 +42,9 @@ margin_right = 267.5
 margin_bottom = 200.0
 custom_fonts/font = ExtResource( 1 )
 text = "Join Server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Username_text_edit" type="LineEdit" parent="Multiplayer_configure"]
 anchor_left = 0.5
