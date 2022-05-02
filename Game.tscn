@@ -108,7 +108,7 @@ autostart = true
 [node name="Spawn_enemy" type="Node" parent="."]
 
 [node name="spawn" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( 2113.74, -183.509 )
+position = Vector2( 2040.18, 154.881 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
