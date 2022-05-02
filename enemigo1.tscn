@@ -30,7 +30,9 @@ offset = Vector2( 31.4938, -8.1358 )
 position = Vector2( 16, 0 )
 shape = SubResource( 2 )
 
-[node name="player_detection_zone" type="Area2D" parent="."]
+[node name="player_detection_zone" type="Area2D" parent="." groups=[
+"Player",
+]]
 position = Vector2( 8, 0 )
 script = ExtResource( 3 )
 
