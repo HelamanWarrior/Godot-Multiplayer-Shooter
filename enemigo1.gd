@@ -21,7 +21,7 @@ var state = IDLE
 
 onready var sprite = $AnimatedSprite
 onready var stats = $Stats
-onready var playerDetectionZone = $PlayerDetectionZone
+onready var playerDetectionZone = $player_detection_zone
 onready var hurtBox = $HurtBox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
