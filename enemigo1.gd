@@ -71,7 +71,7 @@ func accelerate_towards_point(point, delta):
 	sprite.flip_h = velocidad.x < 0
 
 func seek_player():
-	if playerDetectionZone.can_see_player():
+	if playerDetectionZone.ver_jugador():
 		state = CHASE
 
 func pick_random_state(state_list):
