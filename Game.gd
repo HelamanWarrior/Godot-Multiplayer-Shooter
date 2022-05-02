@@ -1,5 +1,5 @@
 extends Node2D
-export (PackedScene) var enemy
+export (PackedScene) var enemy 
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
@@ -36,6 +36,7 @@ func _player_disconnected(id) -> void:
 
 
 func _on_enemy_spawn_timer_timeout():
-	var enemy= enemy.instance()
-	enemy.position= $Spawn_enemy/spawn.position
+	var e = enemy.instance()
+	add_child(e)
+	e.position= $Spawn_enemy/spawn.position
 
