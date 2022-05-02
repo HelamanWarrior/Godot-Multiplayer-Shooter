@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://enemigo1.gd" type="Script" id=1]
+[ext_resource path="res://6b27ae2684934a553309a8feef01af4c.jpg" type="Texture" id=2]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "enemigo1",
+"speed": 5.0
+} ]
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 59.1322
+
+[node name="enemigo1" type="RigidBody2D"]
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( 87.4741, 120.106 )
+frames = SubResource( 1 )
+animation = "enemigo1"
+offset = Vector2( 31.4938, -8.1358 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 111.551, 118.353 )
+shape = SubResource( 2 )

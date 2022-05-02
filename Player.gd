@@ -13,6 +13,7 @@ var username_text = load("res://Username_text.tscn")
 var username setget username_set
 var username_text_instance = null
 
+
 puppet var puppet_hp = 100 setget puppet_hp_set
 puppet var puppet_position = Vector2(0, 0) setget puppet_position_set
 puppet var puppet_velocity = Vector2()
