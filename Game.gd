@@ -37,5 +37,5 @@ func _player_disconnected(id) -> void:
 
 func _on_enemy_spawn_timer_timeout():
 	var enemy= enemy.instance()
-	enemy.inicio($Spawn_enemy/1.position) 
+	enemy.inicio($Spawn_enemy/spawn.position) 
 

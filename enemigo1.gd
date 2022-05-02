@@ -12,4 +12,4 @@ func _ready():
 
 
 func inicio(pos):
-	position=pos
+	self.position = pos

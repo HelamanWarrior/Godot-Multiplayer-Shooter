@@ -103,11 +103,11 @@ position = Vector2( 2048, 512 )
 position = Vector2( 2048, 1792 )
 
 [node name="enemy_spawn_timer" type="Timer" parent="."]
-wait_time = 2.094
+autostart = true
 
 [node name="Spawn_enemy" type="Node" parent="."]
 
-[node name="1" type="Position2D" parent="Spawn_enemy"]
+[node name="spawn" type="Position2D" parent="Spawn_enemy"]
 position = Vector2( 2054.89, 100.935 )
 
 [node name="UI" type="CanvasLayer" parent="."]
