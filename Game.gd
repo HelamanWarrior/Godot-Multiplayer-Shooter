@@ -1,5 +1,5 @@
 extends Node2D
-export (PackedScene) var enemy 
+onready var enemy = "enemigo1.tscn"
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
