@@ -9,7 +9,7 @@ func ver_jugador():
 
 
 func _on_player_detection_zone_body_entered(body):
-	if (body.in_group("Player")):
+	if (body.is_in_group("Player")):
 		player = body
 
 
