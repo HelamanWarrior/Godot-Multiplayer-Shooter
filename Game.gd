@@ -39,20 +39,24 @@ func _player_disconnected(id) -> void:
 
 var rng = RandomNumberGenerator.new()
 
+sync func instance_enemy1(id):
+	var enemy1_instance = Global.instance_node_at_location(enemy_scene, Persistent_nodes, random_spawn_enemy_position())
+	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
+	enemy1_instance.set_network_master(id)
+	Network.networked_object_name_index += 1
+
 func _on_enemy_spawn_timer_timeout():
+	rpc("instance_enemy1", get_tree().get_network_unique_id())
 	
-	var enemy = rpc("instance_enemy1", get_tree().get_network_unique_id())
-	add_child(enemy)
+	
+func random_spawn_enemy_position():
 	var randomPlace= rng.randi_range(1,4)
 	
-	
 	if (randomPlace==1):
-		enemy.position= $Spawn_enemy/spawn.position
+		return $Spawn_enemy/spawn.position
 	elif (randomPlace==2):
-		enemy.position= $Spawn_enemy/spawn2.position
+		return $Spawn_enemy/spawn2.position
 	elif (randomPlace==3):
-		enemy.position= $Spawn_enemy/spawn3.position
+		return $Spawn_enemy/spawn3.position
 	elif (randomPlace==4):
-		enemy.position= $Spawn_enemy/spawn4.position
-	
-
+		return $Spawn_enemy/spawn4.position
