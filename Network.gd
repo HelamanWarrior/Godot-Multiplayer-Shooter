@@ -49,6 +49,7 @@ func _ready() -> void:
 func create_server() -> void:
 	server = NetworkedMultiplayerENet.new()
 	server.create_server(DEFAULT_PORT, MAX_CLIENTS)
+	
 	get_tree().set_network_peer(server)
 	Global.instance_node(load("res://Server_advertiser.tscn"), get_tree().current_scene)
 

@@ -1,5 +1,8 @@
 extends Node2D
-export var enemy = preload("res://enemigo1.tscn")
+
+var enemy_scene = preload("res://enemigo1.tscn")
+
+
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
@@ -34,9 +37,22 @@ func _player_disconnected(id) -> void:
 		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
 		Persistent_nodes.get_node(str(id)).queue_free()
 
+var rng = RandomNumberGenerator.new()
 
 func _on_enemy_spawn_timer_timeout():
-	var e = enemy.instance()
-	add_child(e)
-	e.position= $Spawn_enemy/spawn.position
+	
+	var enemy = rpc("instance_enemy1", get_tree().get_network_unique_id())
+	add_child(enemy)
+	var randomPlace= rng.randi_range(1,4)
+	
+	
+	if (randomPlace==1):
+		enemy.position= $Spawn_enemy/spawn.position
+	elif (randomPlace==2):
+		enemy.position= $Spawn_enemy/spawn2.position
+	elif (randomPlace==3):
+		enemy.position= $Spawn_enemy/spawn3.position
+	elif (randomPlace==4):
+		enemy.position= $Spawn_enemy/spawn4.position
+	
 

@@ -47,3 +47,8 @@ func _on_Destroy_timer_timeout():
 	if get_tree().has_network_peer():
 		if get_tree().is_network_server():
 			rpc("destroy")
+
+
+func _on_Hitbox_area_entered(area):
+	if area.is_in_group("Enemy"):
+		rpc("destroy")

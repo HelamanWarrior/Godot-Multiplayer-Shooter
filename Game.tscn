@@ -108,7 +108,16 @@ autostart = true
 [node name="Spawn_enemy" type="Node" parent="."]
 
 [node name="spawn" type="Position2D" parent="Spawn_enemy"]
-position = Vector2( 2040.18, 154.881 )
+position = Vector2( 2822.92, -122.087 )
+
+[node name="spawn2" type="Position2D" parent="Spawn_enemy"]
+position = Vector2( 1245.4, -116.066 )
+
+[node name="spawn3" type="Position2D" parent="Spawn_enemy"]
+position = Vector2( -157.503, 594.417 )
+
+[node name="spawn4" type="Position2D" parent="Spawn_enemy"]
+position = Vector2( 4225.82, 492.06 )
 
 [node name="UI" type="CanvasLayer" parent="."]
 script = ExtResource( 4 )
@@ -131,9 +140,10 @@ __meta__ = {
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-margin_top = -35.5
-margin_right = 0.00012207
-margin_bottom = 57.5001
+margin_left = -87.8387
+margin_top = -1108.41
+margin_right = -87.8386
+margin_bottom = -1015.41
 custom_fonts/font = SubResource( 3 )
 custom_colors/font_color_shadow = Color( 0, 0, 0, 1 )
 custom_constants/shadow_offset_x = 6
