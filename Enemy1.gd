@@ -23,7 +23,7 @@ func _physics_process(delta):
 		print("Estoy en el servidor!") 
 		if (playerSeeking != null):
 			print("Tengo un player al que seguir")
-			var dir= (playerSeeking.position - position).normalized()
+			var dir= (playerSeeking.global_position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
 			puppet_velocity = velocity
