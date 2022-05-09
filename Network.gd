@@ -3,7 +3,6 @@ extends Node
 const DEFAULT_PORT = 28960
 const MAX_CLIENTS = 6
 
-#var enemy_scene = preload("res://enemigo1.tscn")
 
 var server = null
 var client = null
