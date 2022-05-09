@@ -48,4 +48,5 @@ sync func newPlayerSeeking(playerToSeek):
 func _on_seekArea_area_entered(area):
 	if (area.get_parent().is_in_group('Player') and playerSeeking == null):
 		print("ya tengo un player al que seguir")
+		playerSeeking = area.get_parent()
 		rpc('newPlayerSeeking', area.get_parent())
