@@ -33,9 +33,7 @@ func _process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
 			global_position += velocity * speed * delta
-			rset("puppet_velocity", velocity)
-			rset("puppet_rotation", rotation)
-			rset("puppet_position", global_position)
+			
 		
 	
 	else:
