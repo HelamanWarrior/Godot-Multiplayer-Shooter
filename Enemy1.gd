@@ -10,7 +10,7 @@ var playerSeeking = null
 var hp = 1
 var facing = 0
 
-puppet var puppet_velocity = Vector2()
+puppet var puppet_dir = Vector2()
 puppet var puppet_facing = 0
 
 # Called when the node enters the scene tree for the first time.
@@ -24,12 +24,12 @@ func _process(delta):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
-			rset(puppet_velocity,velocity)
+			rset(puppet_dir,dir)
 			rset(puppet_facing,facing)
 
 	else:
-		velocity= puppet_velocity
-		
+		velocity= puppet_dir
+		facing = puppet_facing
 
 
 sync func newPlayerSeeking(playerToSeek):
