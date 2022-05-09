@@ -33,15 +33,18 @@ func _process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
 			global_position += velocity * speed * delta
-		else:
-			rotation = puppet_rotation
-			global_position += puppet_velocity * speed * delta
+		
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			look_at(playerSeeking.position)
-			
+			rset("puppet_velocity", velocity)
+			rset("puppet_rotation", rotation)
+			rset("puppet_position", global_position)
+	else:
+		rotation = puppet_rotation
+		global_position += puppet_velocity * speed * delta
 
 	
 
