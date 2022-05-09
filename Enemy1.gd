@@ -36,9 +36,9 @@ func _physics_process(delta):
 #		velocity = puppet_velocity
 #		facing = puppet_facing
 		
-sync func set_movement():
-	velocity = puppet_velocity
-	facing= puppet_facing
+sync func set_movement(vel,fac):
+	velocity = vel
+	facing= fac
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
