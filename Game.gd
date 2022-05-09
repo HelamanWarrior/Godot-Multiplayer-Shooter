@@ -53,10 +53,10 @@ func _player_disconnected(id) -> void:
 
 #  ---- ENEMIGOS ----
 #Ejecutamos la creación del enemigo en todos los clientes
-remote func instance_enemy1(id):
+sync func instance_enemy1(id):
 	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
 	enemy1_instance.name = name + str(Network.networked_object_name_index)
-	enemy1_instance.set_network_master(1)
+	enemy1_instance.set_network_master(id)
 	Network.networked_object_name_index += 1
 
 # Cuando llega a 0 el timer que hemos creado para el spawn de enemigos
