@@ -24,8 +24,7 @@ func _process(delta):
 			var dir= (playerSeeking.global_position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
-			
-			rpc("set_movement",velocity,playerSeeking.position)
+			rpc_unreliable("set_movement",velocity,playerSeeking.position)
 			
 #	if (not is_network_master()):
 #		print("no soy master")
@@ -36,8 +35,8 @@ func _process(delta):
 #		velocity = puppet_velocity
 #		facing = puppet_facing
 		
-remote func set_movement(vel,fac):
-	velocity=move_and_slide(vel)
+sync func set_movement(vel,fac):
+	velocity=move_and_slide(vel*speed)
 	#move_and_slide(vel * speed)
 	facing= look_at(fac)
 
