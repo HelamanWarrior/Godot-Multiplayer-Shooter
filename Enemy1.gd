@@ -23,9 +23,9 @@ func _process(delta):
 		if (playerSeeking != null):
 			var dir= (playerSeeking.global_position - position).normalized()
 			velocity = move_and_slide(dir * speed)
+			facing = look_at(playerSeeking.position)
 			
-			
-			rpc("set_movement",velocity,playerSeeking)
+			rpc("set_movement",velocity,playerSeeking.position)
 			
 #	if (not is_network_master()):
 #		print("no soy master")
