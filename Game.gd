@@ -1,20 +1,31 @@
 extends Node2D
 
-var enemy_scene = preload("res://enemigo1.tscn")
-
 
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
 
 func _ready() -> void:
+	# conectamos el trigger para que ejecute la funcion player disconected cuando se desconecte un cliente
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
+<<<<<<< Updated upstream
 	
+=======
+	$enemy_spawn_timer.start() # iniciamos el timer para spawnear enemigos
+	
+	
+	# Si el arbol de nodos actual tiene la conexión como servidor
+>>>>>>> Stashed changes
 	if get_tree().is_network_server():
+		# ejecutamos este metodo para apawnear al player en una posicion vacia
 		setup_players_positions()
+<<<<<<< Updated upstream
 	
 	$enemy_spawn_timer.start()
 	
+=======
+		
+>>>>>>> Stashed changes
 
 # Cuando el usuario esta hosteando la partida se llama a esta función para que establezca las posiciones de spawn
 func setup_players_positions() -> void:
@@ -31,14 +42,14 @@ func setup_players_positions() -> void:
 					# Le decimos que el player de este dispositivo será el que ocupará esta posicion
 					current_player_for_spawn_location_number = player
 
-# si el player se desconecta lo borramos
+# si el player se desconecta lo borramos este metodo se ejecuta a través de un trigger/signal
 func _player_disconnected(id) -> void:
 	if Persistent_nodes.has_node(str(id)):
 		Persistent_nodes.get_node(str(id)).username_text_instance.queue_free()
 		Persistent_nodes.get_node(str(id)).queue_free()
 
-var rng = RandomNumberGenerator.new()
 
+<<<<<<< Updated upstream
 sync func instance_enemy1(id):
 	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
 	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
@@ -60,3 +71,5 @@ func random_spawn_enemy_position():
 		return $Spawn_enemy/spawn3.position
 	elif (randomPlace==4):
 		return $Spawn_enemy/spawn4.position
+=======
+>>>>>>> Stashed changes

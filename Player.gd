@@ -10,8 +10,8 @@ var is_reloading = false
 var player_bullet = load("res://Player_bullet.tscn")
 var username_text = load("res://Username_text.tscn")
 
-var username setget username_set
-var username_text_instance = null
+var username setget username_set  # Le indicamos que su setter es la funcion usernam_set
+var username_text_instance = null  
 
 
 puppet var puppet_hp = 100 setget puppet_hp_set
@@ -27,41 +27,68 @@ onready var shoot_point = $Shoot_point
 onready var hit_timer = $Hit_timer
 
 func _ready():
+	# Conectamos una signal/trigger para que se ejecute la función _network_peer_connected() cada vez que se conecte un nuevo player/cliente
 	get_tree().connect("network_peer_connected", self, "_network_peer_connected")
 	
+	# guardamos el objeto player (ya instanciado en Global) en username_text_instance  
 	username_text_instance = Global.instance_node_at_location(username_text, Persistent_nodes, global_position)
 	username_text_instance.player_following = self
 	
 	update_shoot_mode(false)
+	# Añadimos el player (self) al array de players en Global
 	Global.alive_players.append(self)
 	
+	# yield hace que se ejecute el siguiente frame
 	yield(get_tree(), "idle_frame")
+	 # En caso que este script lo ejecute un cliente ya conectado
 	if get_tree().has_network_peer():
+		# Si el cliente es el master de este script/player
 		if is_network_master():
+			#Le decimos al script Global que ponga como player master esta instancia de player
 			Global.player_master = self
 
+
+# Cada loop del juego se llama a esta funcion
 func _process(delta: float) -> void:
+	# Si el objeto player ya existe, o si la instancia en Global no es null
 	if username_text_instance != null:
+		# Le ponemos de astributo name el texto username seguido del nombre de este nodo de tipo player
 		username_text_instance.name = "username" + name
 	
+	# Comprobamos que la instancia de player actual corresponda con el master y además que sea visible
 	if get_tree().has_network_peer():
-		if is_network_master() and visible:
+		if is_network_master() and visible:  # cuando muere un player lo hacemos invisible (realmente estamos preguntando si esta vivo)
+			
+			# guardamos la información de los inputs del cliente
 			var x_input = int(Input.is_action_pressed("right")) - int(Input.is_action_pressed("left"))
 			var y_input = int(Input.is_action_pressed("down")) - int(Input.is_action_pressed("up"))
 			
+			# ccambiamos el valor de velocity por el vector que nos da aplicando los inputs
 			velocity = Vector2(x_input, y_input).normalized()
 			
-			move_and_slide(velocity * speed)
+			# ejecutamos el movimiento a través de este metodo propio de los nodos de tipo kinematicBody2D
+			move_and_slide(velocity * speed) # passamos el vector de movimiento y le aplicamos la fuerza correspondiente, la velocidad (speed)
 			
+			# ejecutamos este metodo para actualizar hacia donde mira el personaje. Le enviamos la posición del ratón
 			look_at(get_global_mouse_position())
 			
+			# tratamos el input de los disparos
+			# le hemos aplicado un reloading o tiempo de espera entre disparos y una variable que nos indica si puede disparar o no.
 			if Input.is_action_pressed("click") and can_shoot and not is_reloading:
+				# Para ejecutar el disparo de forma sincrona en todos los clientes
+				# ejecutamos el metodo rpc() que nos permite ejecutar una funcion de forma remota en todos los clientes
+				# esta funcion la tenemos dentro del propio script player i le pasamos
+				# el nombre de la funcion a ejecutar y la id del cliente que ha disparado  Por lo tanto cuando ejecutemos tendremos que ver si la instancia de player tiene como master la id que le pasamos.
 				rpc("instance_bullet", get_tree().get_network_unique_id())
 				is_reloading = true
 				reload_timer.start()
+				
+		# en caso que la instancia de player que se esta ejecutando no corresponda con el player del cliente
 		else:
+			# La rotación será igual a el punto intermedio entre la rotacion actual y el de el puppet cada 8 loops
 			rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
 			
+			# Si Tween no esta activo ejecuta el movimiento guardado en puppet_velocity
 			if not tween.is_active():
 				move_and_slide(puppet_velocity * speed)
 	
@@ -73,6 +100,7 @@ func _process(delta: float) -> void:
 			if get_tree().is_network_server():
 				rpc("destroy")
 
+# Este metodo lo hemos sobreescrito
 func lerp_angle(from, to, weight):
 	return from + short_angle_dist(from, to) * weight
 
@@ -128,12 +156,19 @@ func _on_Network_tick_rate_timeout():
 			rset_unreliable("puppet_velocity", velocity)
 			rset_unreliable("puppet_rotation", rotation)
 
+# para que se ejecute en todos los clientes a través de rpc le ponemos la etiqueta sync
 sync func instance_bullet(id):
+	# instanciamos la bala en Global y guardamos el objeto bala que devuelve
 	var player_bullet_instance = Global.instance_node_at_location(player_bullet, Persistent_nodes, shoot_point.global_position)
-	player_bullet_instance.name = "Bullet" + name + str(Network.networked_object_name_index)
+	# Le damos nombre a la bala para tenerla identificada
+	player_bullet_instance.name = "Bullet" + name + str(Network.networked_object_name_index) # el metodo creado en network va generando numeros nuevos cada vez que le pedimos uno
+	# Le indicamos que el master de este objeto bala es justamente la id  del cliente que ha disparado
 	player_bullet_instance.set_network_master(id)
+	# Le indicamos la dirección de la bala que será la misma que la direccion en que mira el player. Esta información la guarda el objeto bala en una variable creada para ello
 	player_bullet_instance.player_rotation = rotation
+	# Le indicamos también el player que ha creado la bala
 	player_bullet_instance.player_owner = id
+	# Indicamos a Network que aumente en uno el indice de objetos (esto se hace una vez llamado en remoto para que aumente en uno en todos los clientes)
 	Network.networked_object_name_index += 1
 
 sync func update_position(pos):

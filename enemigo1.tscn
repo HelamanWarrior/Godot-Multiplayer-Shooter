@@ -6,12 +6,17 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 59.1322
 
+<<<<<<< Updated upstream
 [sub_resource type="CircleShape2D" id=2]
 radius = 576.0
+=======
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 864.001
+height = 143.999
+>>>>>>> Stashed changes
 
 [sub_resource type="CapsuleShape2D" id=3]
-radius = 64.0
-height = 0.0
+radius = 40.0
 
 [node name="enemigo1" type="KinematicBody2D" groups=[
 "Enemy",
@@ -29,6 +34,7 @@ light_mask = 0
 position = Vector2( 32, 0 )
 shape = SubResource( 1 )
 
+<<<<<<< Updated upstream
 [node name="PlayerDetectionZone" type="Area2D" parent="."]
 visible = false
 
@@ -43,11 +49,17 @@ visible = false
 [node name="hurtBox" type="Area2D" parent="." groups=[
 "Enemy",
 ]]
+=======
+[node name="zonaDeteccionEnemigos" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="zonaDeteccionEnemigos"]
+position = Vector2( 240, 15.9991 )
+shape = SubResource( 2 )
+
+[node name="hurtBox" type="Area2D" parent="."]
+>>>>>>> Stashed changes
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="hurtBox"]
-position = Vector2( 24, -8.58307e-05 )
 shape = SubResource( 3 )
-[connection signal="body_entered" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_body_entered"]
-[connection signal="body_exited" from="PlayerDetectionZone" to="." method="_on_PlayerDetectionZone_body_exited"]
-[connection signal="area_entered" from="hurtBox" to="." method="_on_hurtBox_area_entered"]
+[connection signal="body_entered" from="zonaDeteccionEnemigos" to="." method="_on_zonaDeteccionEnemigos_body_entered"]
 [connection signal="body_entered" from="hurtBox" to="." method="_on_hurtBox_body_entered"]

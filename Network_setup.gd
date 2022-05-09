@@ -12,14 +12,18 @@ onready var device_ip_address = $UI/Device_ip_address
 onready var start_game = $UI/Start_game
 
 func _ready() -> void:
+	# Conectamos señales/triggers para ejecutar los metodos correspondientes cuando se activen
 	get_tree().connect("network_peer_connected", self, "_player_connected")
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 	get_tree().connect("connected_to_server", self, "_connected_to_server")
 	
+	# guardamos la ip como texto en el nodo UI para mostrarla por pantalla. 
+	# Como la variable tiene la etiqueta onready, una vez hecho esto se mostrará automaticamente
 	device_ip_address.text = Network.ip_address
 	
-	#Mientras estan conectados 
+	# Si ya hay alguna conexión
 	if get_tree().network_peer != null:
+		
 		# la UI no se muestra
 		multiplayer_config_ui.hide()
 		
@@ -33,8 +37,9 @@ func _ready() -> void:
 						current_spawn_location_instance_number += 1
 						current_player_for_spawn_location_number = player
 	else:
+		# Si no hay una conexión 
 		start_game.hide()
-
+		
 
 # muestra el boton de 'start game' si hay mas de 1 jugador 
 func _process(_delta: float) -> void:
@@ -113,7 +118,7 @@ sync func switch_to_game() -> void:
 		if child.is_in_group("Player"):
 			# activamos los disparos ya que en la sala de espera no hay pistolas ni ataques
 			child.update_shoot_mode(true)
-	# iniciamos la escena del juego en si
+	# iniciamos la escena del juego en el arbol de nodos
 	get_tree().change_scene("res://Game.tscn")
 
 
