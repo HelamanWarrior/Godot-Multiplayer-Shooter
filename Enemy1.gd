@@ -24,13 +24,12 @@ func _process(delta):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
-			rset(puppet_dir,dir)
-			rset(puppet_facing,facing)
+			rpc("update_clients", velocity, facing, playerSeeking)
 
-	else:
-		velocity= puppet_dir
-		facing = puppet_facing
-
+sync func update_clients(vel,fac,pla):
+	velocity=vel
+	facing=fac
+	playerSeeking=pla
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
