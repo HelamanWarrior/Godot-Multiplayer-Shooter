@@ -37,7 +37,7 @@ func _process(delta):
 #		facing = puppet_facing
 		
 remote func set_movement(vel,fac):
-	velocity=vel
+	velocity=move_and_slide(vel)
 	#move_and_slide(vel * speed)
 	facing= look_at(fac)
 
