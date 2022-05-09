@@ -4,16 +4,15 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-const speed = 200
-
+var speed = 200
 var velocity = Vector2()
 var playerSeeking = null
 
-puppet var puppet_position setget puppet_position_set
+
+puppet var puppet_position = Vector2()
 puppet var puppet_velocity = Vector2()
 puppet var puppet_rotation = 0
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	yield(get_tree(), "idle_frame")
 	
@@ -37,6 +36,15 @@ func _process(delta):
 		else:
 			rotation = puppet_rotation
 			global_position += puppet_velocity * speed * delta
+	if get_tree().is_network_server():
+		if (playerSeeking != null):
+			var dir= (playerSeeking.position - position).normalized()
+			velocity = move_and_slide(dir * speed)
+			look_at(playerSeeking.position)
+			
+
+	
+
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
