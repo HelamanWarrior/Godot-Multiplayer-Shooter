@@ -20,7 +20,6 @@ func _ready():
 
 func _physics_process(delta):
 	if get_tree().is_network_server():
-		print("Estoy en el servidor!") 
 		if (playerSeeking != null):
 			print("Tengo un player al que seguir")
 			var dir= (playerSeeking.global_position - position).normalized()
