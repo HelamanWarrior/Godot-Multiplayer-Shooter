@@ -22,9 +22,13 @@ func _process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
 			var dir= (playerSeeking.position - position).normalized()
-			velocity = move_and_slide(dir * speed)
+			var velocity = move_and_slide(dir * speed)
+			var vel = velocity
 			facing = look_at(playerSeeking.position)
-			rpc_unreliable("set_movement",velocity,facing)
+			var fac= facing
+			rset_unreliable(velocity,vel)
+			rset_unreliable(facing,fac)
+
 			
 #	if (not is_network_master()):
 #		print("no soy master")
@@ -35,10 +39,7 @@ func _process(delta):
 #		velocity = puppet_velocity
 #		facing = puppet_facing
 		
-remote func set_movement(vel,fac):
-	velocity=vel
-	#move_and_slide(vel * speed)
-	facing= fac
+
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
