@@ -22,12 +22,11 @@ func _process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
 			var dir= (playerSeeking.position - position).normalized()
-			var velocity = move_and_slide(dir * speed)
-			var vel = velocity
+			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
 			var fac= facing
-			rset_unreliable(velocity,vel)
-			rset_unreliable(facing,fac)
+			rset_unreliable(velocity,self.velocity)
+			rset_unreliable(facing,self.facing)
 
 			
 #	if (not is_network_master()):
