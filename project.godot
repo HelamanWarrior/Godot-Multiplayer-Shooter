@@ -89,6 +89,15 @@ click={
  ]
 }
 
+[layer_names]
+
+2d_physics/layer_1="mundo"
+2d_physics/layer_2="jugador"
+2d_physics/layer_3="hurtboxjugador"
+2d_physics/layer_4="hurtboxenemigo"
+2d_physics/layer_5="enemigo"
+2d_physics/layer_6="softCollision"
+
 [rendering]
 
 quality/2d/use_pixel_snap=true
