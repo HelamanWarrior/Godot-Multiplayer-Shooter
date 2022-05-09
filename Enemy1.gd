@@ -24,7 +24,7 @@ func _process(delta):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
-			rpc_unreliable("set_movement",velocity,playerSeeking.position)
+			rpc_unreliable("set_movement",velocity,facing)
 			
 #	if (not is_network_master()):
 #		print("no soy master")
@@ -38,7 +38,7 @@ func _process(delta):
 remote func set_movement(vel,fac):
 	velocity=vel
 	#move_and_slide(vel * speed)
-	facing= look_at(fac)
+	facing= fac
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
