@@ -19,18 +19,13 @@ func _ready():
 
 
 func _process(delta):
-	if get_tree().is_network_server():
+	if is_network_master():
 		if (playerSeeking != null):
 			position= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(position * speed)
 			look_at(playerSeeking.position)
 			#update_clients(dir,velocity,facing)
-	else:
-		rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
-			
-			# Si Tween no esta activo ejecuta el movimiento guardado en puppet_velocity
-			
-		move_and_slide(puppet_velocity * speed)
+	
 
 #func update_clients(dir,vel,fac):
 #	puppet_position=dir
