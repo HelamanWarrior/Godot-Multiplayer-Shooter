@@ -4,14 +4,14 @@ extends KinematicBody2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var speed = 200
+const speed = 200
+
 var velocity = Vector2()
 var playerSeeking = null
-var hp = 1
-var facing = 0
 
-puppet var puppet_dir = Vector2()
-puppet var puppet_facing = 0
+puppet var puppet_position = Vector2(0, 0) setget puppet_position_set
+puppet var puppet_velocity = Vector2()
+puppet var puppet_rotation = 0
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -21,20 +21,25 @@ func _ready():
 func _process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
-			var dir= (playerSeeking.position - position).normalized()
-			velocity = move_and_slide(dir * speed)
-			facing = look_at(dir)
-			rpc_unreliable("update_clients",dir,facing, playerSeeking)
+			position= (playerSeeking.position - position).normalized()
+			velocity = move_and_slide(position * speed)
+			look_at(playerSeeking.position)
+			#update_clients(dir,velocity,facing)
 	else:
-		if (playerSeeking != null):
-			var dir= (playerSeeking.position - position).normalized()
-			velocity = move_and_slide(dir * speed)
-			facing = look_at(dir)
+		rotation = lerp_angle(rotation, puppet_rotation, delta * 8)
+			
+			# Si Tween no esta activo ejecuta el movimiento guardado en puppet_velocity
+			
+		move_and_slide(puppet_velocity * speed)
 
-remote func update_clients(dir,pla):
-	velocity=move_and_slide(dir*speed)
-	facing=look_at(dir)
-	playerSeeking=pla
+#func update_clients(dir,vel,fac):
+#	puppet_position=dir
+#	puppet_rotation=fac
+#	puppet_velocity=vel
+
+func puppet_position_set(new_value):
+	puppet_position = new_value
+	
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
