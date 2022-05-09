@@ -23,9 +23,9 @@ func _process(delta):
 		if (playerSeeking != null):
 			var dir= (playerSeeking.global_position - position).normalized()
 			velocity = move_and_slide(dir * speed)
-			facing = look_at(playerSeeking.position)
 			
-			rpc("set_movement",dir,facing)
+			
+			rpc("set_movement",velocity,playerSeeking)
 			
 #	if (not is_network_master()):
 #		print("no soy master")
@@ -37,8 +37,9 @@ func _process(delta):
 #		facing = puppet_facing
 		
 remote func set_movement(vel,fac):
-	move_and_slide(vel * speed)
-	facing= fac
+	velocity=vel
+	#move_and_slide(vel * speed)
+	facing= look_at(fac)
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
