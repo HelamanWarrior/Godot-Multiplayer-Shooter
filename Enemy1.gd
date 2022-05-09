@@ -9,7 +9,6 @@ const speed = 200
 var velocity = Vector2()
 var playerSeeking = null
 
-puppet var puppet_position = Vector2(0, 0) setget puppet_position_set
 puppet var puppet_velocity = Vector2()
 puppet var puppet_rotation = 0
 
@@ -19,22 +18,14 @@ func _ready():
 
 
 func _process(delta):
-	if is_network_master():
+	if get_tree().is_network_server():
 		if (playerSeeking != null):
 			position= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(position * speed)
 			look_at(playerSeeking.position)
-			#update_clients(dir,velocity,facing)
-	
+			#Falta updatear en los otros clientes
 
-#func update_clients(dir,vel,fac):
-#	puppet_position=dir
-#	puppet_rotation=fac
-#	puppet_velocity=vel
 
-func puppet_position_set(new_value):
-	puppet_position = new_value
-	
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
