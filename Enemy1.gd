@@ -21,13 +21,11 @@ func _ready():
 func _physics_process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
-			print("Tengo un player al que seguir")
 			var dir= (playerSeeking.global_position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
-			puppet_velocity = velocity
-			puppet_facing = facing
-			rpc("set_movement")
+			
+			rpc("set_movement",velocity,facing)
 			
 #	if (not is_network_master()):
 #		print("no soy master")
@@ -43,10 +41,12 @@ sync func set_movement():
 	facing= puppet_facing
 
 sync func newPlayerSeeking(playerToSeek):
-	playerSeeking= playerToSeek
+	for child in Persistent_nodes.get_children():
+		if child.name == playerToSeek:
+			playerSeeking= child
 
 func _on_seekArea_area_entered(area):
 	if (area.get_parent().is_in_group('Player') and playerSeeking == null):
 		print("ya tengo un player al que seguir")
-		playerSeeking = area.get_parent()
-		rpc('newPlayerSeeking', area.get_parent())
+		
+		rpc('newPlayerSeeking', area.get_parent().name)
