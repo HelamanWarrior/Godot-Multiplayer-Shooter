@@ -26,3 +26,4 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="seekArea"]
 shape = SubResource( 2 )
+[connection signal="area_entered" from="seekArea" to="." method="_on_seekArea_area_entered"]
