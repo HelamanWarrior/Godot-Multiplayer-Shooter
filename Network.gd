@@ -3,7 +3,7 @@ extends Node
 const DEFAULT_PORT = 28960
 const MAX_CLIENTS = 6
 
-var enemy_scene = preload("res://enemigo1.tscn")
+#var enemy_scene = preload("res://enemigo1.tscn")
 
 var server = null
 var client = null
@@ -115,27 +115,27 @@ func networked_object_name_index_set(new_value):
 
 
 # enemigos
-
-var rng = RandomNumberGenerator.new()
-
-func instance_enemy1(id):
-	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Global, random_spawn_enemy_position())
-	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
-	enemy1_instance.set_network_master(1)
-	add_child(enemy1_instance)
-
-func _on_enemy_spawn_timer_timeout():
-	rpc("instance_enemy1", get_tree().get_network_unique_id())
-	
-	
-func random_spawn_enemy_position():
-	var randomPlace= rng.randi_range(1,4)
-	
-	if (randomPlace==1):
-		return $Spawn_enemy/spawn.position
-	elif (randomPlace==2):
-		return $Spawn_enemy/spawn2.position
-	elif (randomPlace==3):
-		return $Spawn_enemy/spawn3.position
-	elif (randomPlace==4):
-		return $Spawn_enemy/spawn4.position
+#
+#var rng = RandomNumberGenerator.new()
+#
+#func instance_enemy1(id):
+#	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Global, random_spawn_enemy_position())
+#	enemy1_instance.name = "Enemy1" + name + str(Network.networked_object_name_index)
+#	enemy1_instance.set_network_master(1)
+#	add_child(enemy1_instance)
+#
+#func _on_enemy_spawn_timer_timeout():
+#	rpc("instance_enemy1", get_tree().get_network_unique_id())
+#
+#
+#func random_spawn_enemy_position():
+#	var randomPlace= rng.randi_range(1,4)
+#
+#	if (randomPlace==1):
+#		return $Spawn_enemy/spawn.position
+#	elif (randomPlace==2):
+#		return $Spawn_enemy/spawn2.position
+#	elif (randomPlace==3):
+#		return $Spawn_enemy/spawn3.position
+#	elif (randomPlace==4):
+#		return $Spawn_enemy/spawn4.position

@@ -30,6 +30,9 @@ margin_right = 267.5
 margin_bottom = -25.9999
 custom_fonts/font = ExtResource( 1 )
 text = "Create Server"
+__meta__ = {
+"_edit_use_anchors_": false
+}
 
 [node name="Join_server" type="Button" parent="Multiplayer_configure"]
 anchor_left = 0.5

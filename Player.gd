@@ -83,6 +83,8 @@ func _process(delta: float) -> void:
 				is_reloading = true
 				reload_timer.start()
 				
+				## hello
+				
 		# en caso que la instancia de player que se esta ejecutando no corresponda con el player del cliente
 		else:
 			# La rotación será igual a el punto intermedio entre la rotacion actual y el de el puppet cada 8 loops
@@ -171,9 +173,10 @@ sync func instance_bullet(id):
 	# Indicamos a Network que aumente en uno el indice de objetos (esto se hace una vez llamado en remoto para que aumente en uno en todos los clientes)
 	Network.networked_object_name_index += 1
 
+#enviamos la posicion de esta instancia de player que corresponde con el player master a todas las instancia del mismo player en otros clientes
 sync func update_position(pos):
-	global_position = pos
-	puppet_position = pos
+	global_position = pos  # updateamos la global position
+	puppet_position = pos	# updateamos la puppet position que usaran los puppet
 
 func update_shoot_mode(shoot_mode):
 	if not shoot_mode:
@@ -189,18 +192,28 @@ func _on_Reload_timer_timeout():
 func _on_Hit_timer_timeout():
 	modulate = Color(1, 1, 1, 1)
 
+# metodo conectado que se ejecuta cuando un area entra en el area del player
 func _on_Hitbox_area_entered(area):
+	# Si se ejecuta en el servidor (Es importante esta aclaración para que sea el server quien gestione esta situación y luego se actualice en los clientes el resultado)
 	if get_tree().is_network_server():
+		# Si se trata de una bala
 		if area.is_in_group("Player_damager") and area.get_parent().player_owner != int(name):
+			# mandamos mensaje TCP para ejecutar la funcion remota hit_by_damager y le pasamos el damage que es la variable que indica el daño de una bala en el nodo player_bullet que corresponde con la bala
 			rpc("hit_by_damager", area.get_parent().damage)
-			
+			# mandamos ejecutar la funcion remota destroy de la bala para que se destruya en todos los clientes
 			area.get_parent().rpc("destroy")
 
+
+# esta funcion se ejecutará cuando sea llamada remotamente
 sync func hit_by_damager(damage):
+	# le restamos al hp de este player el damage que corresponde al daño que recibe por parametro y se corresponde con la bala
 	hp -= damage
+	# Hacemos un pequeño cambio de color para que se vea que ha sido herido
 	modulate = Color(5, 5, 5, 1)
+	# iniciamos un timer para dar un margen entre colisiones al player
 	hit_timer.start()
 
+# Esta funcion se ejecuta de forma remota cuando se crea el player de un cliente
 sync func enable() -> void:
 	hp = 100
 	can_shoot = false
@@ -211,21 +224,29 @@ sync func enable() -> void:
 	$Hitbox/CollisionShape2D.disabled = false
 	
 	if get_tree().has_network_peer():
+		# en caso que esta conexion sea el master
 		if is_network_master():
+			# indicamos que este player es el master en el script Global
 			Global.player_master = self
-	
+	# Si no esta en el array de players vivos lo añadimos
 	if not Global.alive_players.has(self):
 		Global.alive_players.append(self)
 
+# funcion remota que destruye las instancias de este player en los distintos clientes
 sync func destroy() -> void:
+	# Se hidean los 
+	# elementos que descienden del nodo 
 	username_text_instance.visible = false
 	visible = false
 	$CollisionShape2D.disabled = true
 	$Hitbox/CollisionShape2D.disabled = true
 	Global.alive_players.erase(self)
 	
+	
+	# En caso que se trate del player que es master en este juego:
 	if get_tree().has_network_peer():
 		if is_network_master():
+			# Le indicamos a Global que ya no hay player_master porque ha muerto
 			Global.player_master = null
 
 func _exit_tree() -> void:
