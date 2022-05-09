@@ -10,7 +10,7 @@ height = 11.8041
 [sub_resource type="CircleShape2D" id=2]
 radius = 960.3
 
-[node name="Control" type="KinematicBody2D"]
+[node name="Enemy1" type="KinematicBody2D"]
 rotation = 1.5708
 script = ExtResource( 1 )
 
@@ -26,4 +26,3 @@ texture = ExtResource( 2 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="seekArea"]
 shape = SubResource( 2 )
-[connection signal="area_entered" from="seekArea" to="." method="_on_seekArea_area_entered"]

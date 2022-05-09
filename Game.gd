@@ -1,6 +1,7 @@
 extends Node2D
 
 
+
 var enemy_scene = preload("res://Enemy1.tscn")
 
 var current_spawn_location_instance_number = 1
