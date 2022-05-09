@@ -24,9 +24,9 @@ func _process(delta):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(dir)
-			rpc("update_clients",dir, playerSeeking)
+			rpc_unreliable("update_clients",dir,facing, playerSeeking)
 
-sync func update_clients(dir,pla):
+remote func update_clients(dir,pla):
 	velocity=move_and_slide(dir*speed)
 	facing=look_at(dir)
 	playerSeeking=pla
