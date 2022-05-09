@@ -21,7 +21,7 @@ func _ready():
 func _process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
-			var dir= (playerSeeking.global_position - position).normalized()
+			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
 			facing = look_at(playerSeeking.position)
 			rpc_unreliable("set_movement",velocity,playerSeeking.position)
