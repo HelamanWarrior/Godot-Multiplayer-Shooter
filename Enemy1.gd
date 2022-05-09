@@ -18,7 +18,7 @@ func _ready():
 	pass # Replace with function body.
 
 
-func _physics_process(delta):
+func _process(delta):
 	if get_tree().is_network_server():
 		if (playerSeeking != null):
 			var dir= (playerSeeking.global_position - position).normalized()
