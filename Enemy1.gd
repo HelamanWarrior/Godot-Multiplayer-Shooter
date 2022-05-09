@@ -36,7 +36,7 @@ func _process(delta):
 #		velocity = puppet_velocity
 #		facing = puppet_facing
 		
-sync func set_movement(vel,fac):
+remote func set_movement(vel,fac):
 	move_and_slide(vel * speed)
 	facing= fac
 
