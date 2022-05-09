@@ -23,12 +23,12 @@ func _process(delta):
 		if (playerSeeking != null):
 			var dir= (playerSeeking.position - position).normalized()
 			velocity = move_and_slide(dir * speed)
-			facing = look_at(playerSeeking.position)
-			rpc("update_clients", velocity, facing, playerSeeking)
+			facing = look_at(dir)
+			rpc("update_clients",dir, playerSeeking)
 
-sync func update_clients(vel,fac,pla):
-	velocity=vel
-	facing=fac
+sync func update_clients(dir,pla):
+	velocity=move_and_slide(dir*speed)
+	facing=look_at(dir)
 	playerSeeking=pla
 
 sync func newPlayerSeeking(playerToSeek):
