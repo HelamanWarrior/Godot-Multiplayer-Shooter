@@ -28,19 +28,26 @@ func _physics_process(delta):
 			facing = look_at(playerSeeking.position)
 			puppet_velocity = velocity
 			puppet_facing = facing
-	else:
-		print("No soy server")
-		if (not is_network_master()):
-			print("no soy master")
-			velocity= puppet_velocity
-			facing= puppet_facing
+			rpc("set_movement")
+			
+#	if (not is_network_master()):
+#		print("no soy master")
+#		velocity= puppet_velocity
+#		facing= puppet_facing
+#	else:
+#		print("si soy master")
+#		velocity = puppet_velocity
+#		facing = puppet_facing
+		
+sync func set_movement():
+	velocity = puppet_velocity
+	facing= puppet_facing
 
 sync func newPlayerSeeking(playerToSeek):
 	playerSeeking= playerToSeek
 
 func _on_seekArea_area_entered(area):
 	if (is_network_master()):
-		
-		if (area.is_in_group('Player') and playerSeeking != null):
+		if (area.is_in_group('Player') and playerSeeking == null):
 			print("ya tengo un player al que seguir")
 			rpc('newPlayerSeeking', area)
