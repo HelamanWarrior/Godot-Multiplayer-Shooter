@@ -53,10 +53,10 @@ func _player_disconnected(id) -> void:
 
 #  ---- ENEMIGOS ----
 #Ejecutamos la creación del enemigo en todos los clientes
-sync func instance_enemy1():
+sync func instance_enemy1(id):
 	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
 	enemy1_instance.name = name + str(Network.networked_object_name_index)
-	enemy1_instance.set_network_master(1)
+	enemy1_instance.set_network_master(id)
 	Network.networked_object_name_index += 1
 	
 
@@ -65,7 +65,7 @@ func _on_enemy_spawn_timer_timeout():
 	# siempre desde el server
 	if (get_tree().is_network_server()):
 		# Llamamos a la funcion crear enemigo al cual le mandamos la id de quien lo crea
-		rpc("instance_enemy1")
+		rpc("instance_enemy1",get_tree().get_network_unique_id())
 
 
 # El random habria que hacerlo como el de el player en Network. De moento se queda así

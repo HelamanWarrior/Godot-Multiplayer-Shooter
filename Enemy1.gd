@@ -7,6 +7,7 @@ extends KinematicBody2D
 var speed = 200
 var velocity = Vector2()
 var playerSeeking = null
+var facing=0
 
 
 puppet var puppet_position = Vector2()
@@ -19,27 +20,30 @@ func _ready():
 	if get_tree().has_network_peer():
 		if is_network_master():
 			velocity = Vector2(0,0)
-			rotation = 0
+			facing = 0
 			rset("puppet_velocity", velocity)
-			rset("puppet_rotation", rotation)
+			rset("puppet_rotation", facing)
 			rset("puppet_position", global_position)
 
-func puppet_position_set(new_value) -> void:
-	puppet_position = new_value
-	global_position = puppet_position
 
 
 func _process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
-			global_position += velocity * speed * delta
-			
+			if is_network_master():
+				if playerSeeking:
+					
+					velocity = (playerSeeking.position - position).normalized()
+					facing = look_at(playerSeeking.position)
+					rset("puppet_velocity", velocity)
+					rset("puppet_rotation", facing)
+					rset("puppet_position", global_position)
 		
 	
-	else:
-		rotation = puppet_rotation
-		global_position += puppet_velocity * speed * delta
-
+		else:
+			facing= puppet_rotation
+			velocity=puppet_velocity
+			position = puppet_position
 	
 
 
