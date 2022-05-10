@@ -13,6 +13,7 @@ var facing=0
 puppet var puppet_position = Vector2()
 puppet var puppet_velocity = Vector2()
 puppet var puppet_rotation = 0
+puppet var puppet_playerSeeking = null
 
 func _ready():
 	yield(get_tree(), "idle_frame")
@@ -29,22 +30,18 @@ func _ready():
 
 func _physics_process(delta):
 	if get_tree().has_network_peer():
-		if is_network_master():
+		
 			if playerSeeking:
 				var dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
+				rset("puppet_playerSeeking", playerSeeking)
 				rset("puppet_velocity", velocity)
 				rset("puppet_rotation", facing)
 				rset("puppet_position", dir)
-				rpc_unreliable("movement")
 				
 				
-remote func movement():
-	velocity=puppet_velocity
-	facing = puppet_rotation
-	
-	
+
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
