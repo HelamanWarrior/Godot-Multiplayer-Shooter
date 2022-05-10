@@ -34,8 +34,8 @@ func _process(delta):
 			if is_network_master():
 				if playerSeeking:
 					
-					velocity = (playerSeeking.position - position).normalized()
-					position= move_and_slide(velocity * speed).normalized()
+					var dir = (playerSeeking.position - position).normalized()
+					velocity= move_and_slide(dir * speed).normalized()
 					facing = look_at(playerSeeking.position)
 					rset("puppet_velocity", velocity)
 					rset("puppet_rotation", facing)
@@ -45,7 +45,7 @@ func _process(delta):
 		else:
 			facing= puppet_rotation
 			velocity=puppet_velocity
-			position = puppet_position
+			#position = puppet_position
 
 
 sync func newPlayerSeeking(playerToSeek):
