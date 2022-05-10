@@ -35,6 +35,7 @@ func _process(delta):
 				if playerSeeking:
 					
 					velocity = (playerSeeking.position - position).normalized()
+					position= move_and_slide(velocity * speed).normalized()
 					facing = look_at(playerSeeking.position)
 					rset("puppet_velocity", velocity)
 					rset("puppet_rotation", facing)
