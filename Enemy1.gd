@@ -27,7 +27,7 @@ func _ready():
 
 
 
-func _process(delta):
+func _physics_process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
 			if playerSeeking:
@@ -37,11 +37,13 @@ func _process(delta):
 				rset("puppet_velocity", velocity)
 				rset("puppet_rotation", facing)
 				rset("puppet_position", dir)
+				rpc_unreliable("movement")
 				
 				
-	if playerSeeking:
-		
-		facing= look_at(playerSeeking.position)
+remote func movement():
+	velocity=puppet_velocity
+	facing = puppet_rotation
+	
 	
 
 sync func newPlayerSeeking(playerToSeek):
