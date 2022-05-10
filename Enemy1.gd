@@ -29,7 +29,6 @@ func _ready():
 
 func _process(delta):
 	if get_tree().has_network_peer():
-
 		if is_network_master():
 			if is_network_master():
 				if playerSeeking:
@@ -39,14 +38,10 @@ func _process(delta):
 					facing = look_at(playerSeeking.position)
 					rset("puppet_velocity", velocity)
 					rset("puppet_rotation", facing)
-					rset("puppet_position", global_position)
+					rset("puppet_position", dir)
 		
 	
-	else:
-		facing= puppet_rotation
-		velocity=puppet_velocity
-		#position = puppet_position
-
+	
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
