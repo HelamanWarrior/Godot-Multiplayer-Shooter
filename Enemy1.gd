@@ -41,7 +41,10 @@ func _physics_process(delta):
 			rset("puppet_velocity", velocity)
 			rset("puppet_rotation", facing)
 		
-		
+		else:
+			playerSeeking=puppet_playerSeeking
+			velocity = puppet_velocity
+			facing= puppet_velocity
 				
 
 
