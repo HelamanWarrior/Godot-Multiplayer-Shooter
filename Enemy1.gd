@@ -31,15 +31,14 @@ func puppet_position_set(new_value) -> void:
 
 func _process(delta):
 	if get_tree().has_network_peer():
-		if is_network_master():
-			global_position += velocity * speed * delta
-			
+		pass
 		
 	
 	else:
-		rotation = puppet_rotation
-		global_position += puppet_velocity * speed * delta
-
+		pass
+		
+	if get_tree().is_network_server():
+		
 	
 
 
