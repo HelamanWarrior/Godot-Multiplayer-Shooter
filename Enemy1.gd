@@ -30,17 +30,16 @@ func _ready():
 func _process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
-			if is_network_master():
-				if playerSeeking:
-					
-					var dir = (playerSeeking.position - position).normalized()
-					velocity= move_and_slide(dir * speed).normalized()
-					facing = look_at(playerSeeking.position)
-					rset("puppet_velocity", velocity)
-					rset("puppet_rotation", facing)
-					rset("puppet_position", dir)
-		
-	
+			if playerSeeking:
+				var dir = (playerSeeking.position - position).normalized()
+				velocity= move_and_slide(dir * speed).normalized()
+				facing = look_at(playerSeeking.position)
+				rset("puppet_velocity", velocity)
+				rset("puppet_rotation", facing)
+				rset("puppet_position", dir)
+				
+				
+	facing= look_at(playerSeeking.position)
 	
 
 sync func newPlayerSeeking(playerToSeek):
