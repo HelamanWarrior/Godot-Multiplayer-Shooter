@@ -39,7 +39,9 @@ func _process(delta):
 				rset("puppet_position", dir)
 				
 				
-	facing= look_at(playerSeeking.position)
+	if playerSeeking:
+		
+		facing= look_at(playerSeeking.position)
 	
 
 sync func newPlayerSeeking(playerToSeek):
