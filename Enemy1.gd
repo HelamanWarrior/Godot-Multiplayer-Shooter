@@ -42,10 +42,10 @@ func _process(delta):
 					rset("puppet_position", global_position)
 		
 	
-		else:
-			facing= puppet_rotation
-			velocity=puppet_velocity
-			#position = puppet_position
+	else:
+		facing= puppet_rotation
+		velocity=puppet_velocity
+		#position = puppet_position
 
 
 sync func newPlayerSeeking(playerToSeek):
