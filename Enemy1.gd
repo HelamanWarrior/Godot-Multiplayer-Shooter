@@ -37,7 +37,7 @@ func _physics_process(delta):
 				dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
-				rpc("update_enemy",playerSeeking,dir)
+				rpc("update_enemy",playerSeeking,dir,position)
 		else:  
 			pass
 			
@@ -46,7 +46,9 @@ func _physics_process(delta):
 #			var dir = (playerSeeking.position - puppet_position).normalized()
 #			velocity= move_and_slide(dir * speed).normalized()
 #			facing = look_at(playerSeeking.position)
-sync func update_movement(p,d):
+remote func update_movement(p,d,pos):
+	
+	position=pos
 	velocity = move_and_slide(d*speed).normalized()
 	facing= look_at(p.position).normalized()
 
