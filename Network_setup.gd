@@ -21,7 +21,7 @@ func _ready() -> void:
 	# guardamos la ip como texto en el nodo UI para mostrarla por pantalla. 
 	# Como la variable tiene la etiqueta onready, una vez hecho esto se mostrará automaticamente
 	device_ip_address.text = Network.ip_address
-	$EnemySpawnTimer.start()
+	
 	
 	# Si ya hay alguna conexión
 	if get_tree().network_peer != null:
