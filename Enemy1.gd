@@ -37,13 +37,8 @@ func _physics_process(delta):
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
 
-#		else:  
-#			pass
-
-#
-#			var dir = (playerSeeking.position - puppet_position).normalized()
-#			velocity= move_and_slide(dir * speed).normalized()
-#			facing = look_at(playerSeeking.position)
+	if is_network_master():
+		rset("position",position)
 
 
 sync func newPlayerSeeking(playerToSeek):
