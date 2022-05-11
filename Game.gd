@@ -11,7 +11,6 @@ func _ready() -> void:
 	# conectamos el trigger para que ejecute la funcion player disconected cuando se desconecte un cliente
 	get_tree().connect("network_peer_disconnected", self, "_player_disconnected")
 
-	
 
 	$enemy_spawn_timer.start() # iniciamos el timer para spawnear enemigos
 	
@@ -82,4 +81,5 @@ func random_spawn_enemy_position():
 		return $Spawn_enemy/spawn3.position
 	elif (randomPlace==4):
 		return $Spawn_enemy/spawn4.position
+
 

@@ -24,14 +24,11 @@ func _physics_process(delta):
 	## EN TODOS LOS CLIENTES Y SERVIDOR
 	# movimiento
 
-		
-			
 	if get_tree().has_network_peer():
 			if get_tree().is_network_server():
-				rpc("actualizar_posicion",position)
-				rpc_unreliable("actualizar_playerSeeking",playerSeeking)
+				rpc("actualizar_posicion",global_position)
 	
-			
+
 	if playerSeeking:
 		dir = (playerSeeking.global_position - global_position).normalized()
 		velocity= move_and_slide(dir * speed).normalized()
@@ -41,8 +38,6 @@ func _physics_process(delta):
 remote func actualizar_posicion(pos):
 	global_position=pos
 
-remote func actualizar_playerSeeking(p):
-	playerSeeking=p
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
@@ -52,4 +47,4 @@ sync func newPlayerSeeking(playerToSeek):
 func _on_seekArea_area_entered(area):
 	if get_tree().is_network_server():
 		if (area.get_parent().is_in_group('Player') and playerSeeking == null):
-			rpc('newPlayerSeeking', area.get_parent().name)
+			rpc('newPlayerSeeking', area.get_parent())
