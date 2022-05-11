@@ -33,10 +33,7 @@ func _physics_process(delta):
 #	if get_tree().has_network_peer():
 #		if is_network_master():
 	
-	if playerSeeking:
-		dir = (playerSeeking.position - position).normalized()
-		velocity= move_and_slide(dir * speed).normalized()
-		facing = look_at(playerSeeking.position)
+	
 
 	if is_network_master():
 		if (puppet_position!= position):
@@ -49,6 +46,10 @@ func _physics_process(delta):
 		position=puppet_position	
 		playerSeeking = puppet_playerSeeking
 
+	if playerSeeking:
+		dir = (playerSeeking.position - position).normalized()
+		velocity= move_and_slide(dir * speed).normalized()
+		facing = look_at(playerSeeking.position)
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
