@@ -33,13 +33,13 @@ func _physics_process(delta):
 	
 			
 	if playerSeeking:
-			dir = (playerSeeking.position - position).normalized()
-			velocity= move_and_slide(dir * speed).normalized()
-			facing = look_at(playerSeeking.position)
+		dir = (playerSeeking.global_position - global_position).normalized()
+		velocity= move_and_slide(dir * speed).normalized()
+		facing = look_at(playerSeeking.position)
 	
 
 remote func actualizar_posicion(pos):
-	position=pos
+	global_position=pos
 
 remote func actualizar_playerSeeking(p):
 	playerSeeking=p
