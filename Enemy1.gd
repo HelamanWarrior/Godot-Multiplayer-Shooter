@@ -31,6 +31,7 @@ func _ready():
 func _physics_process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
+			print("YES Master, YES peer")
 			if playerSeeking:
 				var dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
@@ -38,12 +39,15 @@ func _physics_process(delta):
 				rset("puppet_playerSeeking", playerSeeking)
 				rset("puppet_velocity", velocity)
 				rset("puppet_rotation", facing)
-	
-#	if not is_network_master():
+		else:  
+			print("NOT master, YES peer")
+	elif not is_network_master():
+		print("NOT Master, NOT peer")
 #		playerSeeking=puppet_playerSeeking
 #		velocity = puppet_velocity
-#		facing= puppet_velocity	
-			
+#		facing= puppet_veloci
+	if get_tree().is_network_server():
+		print("YES Server")
 
 
 sync func newPlayerSeeking(playerToSeek):
