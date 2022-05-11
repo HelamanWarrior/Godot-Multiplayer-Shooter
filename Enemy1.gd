@@ -32,12 +32,12 @@ func _ready():
 func _physics_process(delta):
 	if get_tree().has_network_peer():
 		if is_network_master():
-			print("YES Master, YES peer")
 			if playerSeeking:
 				dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
-				rpc("update_enemy",playerSeeking,dir,position)
+				if get_tree().is_network_server():
+					rpc_unreliable("update_enemy",playerSeeking,dir,position)
 		else:  
 			pass
 			
