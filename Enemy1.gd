@@ -41,12 +41,12 @@ func _physics_process(delta):
 				rset("puppet_playerSeeking",playerSeeking)
 		else:  
 			print("NOT master, YES peer")
-			print("/////////  playerSeeking = "+ playerSeeking)
-			print("/////////  puppet_playerSeeking = "+puppet_playerSeeking)
+			print("/////////  playerSeeking = ", playerSeeking)
+			print("/////////  puppet_playerSeeking = ",puppet_playerSeeking)
 			print("igualamos y volvemos a mostrar")
 			playerSeeking = puppet_playerSeeking
-			print("/////////  playerSeeking = "+ playerSeeking)			
-			print("/////////  puppet_playerSeeking = "+puppet_playerSeeking)
+			print("/////////  playerSeeking = ", playerSeeking)			
+			print("/////////  puppet_playerSeeking = ", puppet_playerSeeking)
 			
 			
 #
