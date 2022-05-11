@@ -26,11 +26,11 @@ func _physics_process(delta):
 
 		
 			
-	if get_tree().is_network_server():
-		rpc("actualizar_posicion",position)
-		rpc_unreliable("actualizar_playerSeeking",playerSeeking)
-	else:
-		pass
+	if get_tree().has_network_peer():
+			if get_tree().is_network_server():
+				rpc("actualizar_posicion",position)
+				rpc_unreliable("actualizar_playerSeeking",playerSeeking)
+	
 			
 	if playerSeeking:
 			dir = (playerSeeking.position - position).normalized()
