@@ -41,10 +41,12 @@ remote func actualizar_posicion(pos):
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
-		if child.name == playerToSeek.name:
+		if child.name == playerToSeek:
 			playerSeeking= child
 
 func _on_seekArea_area_entered(area):
 	if get_tree().is_network_server():
 		if (area.get_parent().is_in_group('Player') and playerSeeking == null):
-			rpc('newPlayerSeeking', area.get_parent())
+			for child in Persistent_nodes.get_children():
+				if child.name == area.get_parent().name:
+					rpc('newPlayerSeeking', child)
