@@ -35,20 +35,12 @@ func _physics_process(delta):
 	
 	## EN TODOS LOS CLIENTES Y SERVIDOR
 	# movimiento
-	if is_network_master():   # En el servidor
+
 		if playerSeeking:
 			dir = (playerSeeking.position - position).normalized()
 			velocity= move_and_slide(dir * speed).normalized()
 			facing = look_at(playerSeeking.position)
-		
-		
-		
-	else:	# En los clientes no servidor
-		if playerSeeking:
 			
-			velocity= move_and_slide(dir * speed).normalized()
-			facing = look_at(playerSeeking.position)
-	
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
