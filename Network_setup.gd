@@ -124,7 +124,7 @@ sync func switch_to_game() -> void:
 	get_tree().change_scene("res://Game.tscn")
 
 
-
+# prueba 3
 #  ---- ENEMIGOS ----
 #Ejecutamos la creación del enemigo en todos los clientes
 sync func instance_enemy1(id):
