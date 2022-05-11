@@ -40,16 +40,12 @@ func _physics_process(delta):
 			dir = (playerSeeking.position - position).normalized()
 			velocity= move_and_slide(dir * speed).normalized()
 			facing = look_at(playerSeeking.position)
-		rset_unreliable("puppet_position",position)
-		rset_unreliable("puppet_playerSeeking" , playerSeeking)
+		
 		
 		
 	else:	# En los clientes no servidor
-		
-		
-		playerSeeking = puppet_playerSeeking
 		if playerSeeking:
-			dir = (playerSeeking.position - puppet_position).normalized()
+			
 			velocity= move_and_slide(dir * speed).normalized()
 			facing = look_at(playerSeeking.position)
 	
