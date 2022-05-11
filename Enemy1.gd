@@ -30,27 +30,21 @@ func _ready():
 
 
 func _physics_process(delta):
-	if get_tree().has_network_peer():
-		if is_network_master():
-			if playerSeeking:
+#	if get_tree().has_network_peer():
+#		if is_network_master():
+	if playerSeeking:
 				dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
-				if get_tree().is_network_server():
-					rpc_unreliable("update_enemy",playerSeeking,dir,position)
-		else:  
-			pass
-			
-			
+
+#		else:  
+#			pass
+
 #
 #			var dir = (playerSeeking.position - puppet_position).normalized()
 #			velocity= move_and_slide(dir * speed).normalized()
 #			facing = look_at(playerSeeking.position)
-remote func update_movement(p,d,pos):
-	
-	position=pos
-	velocity = move_and_slide(d*speed).normalized()
-	facing= look_at(p.position).normalized()
+
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
