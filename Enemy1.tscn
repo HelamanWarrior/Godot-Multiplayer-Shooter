@@ -10,7 +10,9 @@ height = 11.8041
 [sub_resource type="CircleShape2D" id=2]
 radius = 960.3
 
-[node name="Enemy1" type="KinematicBody2D"]
+[node name="Enemy1" type="KinematicBody2D" groups=[
+"Net",
+]]
 rotation = 1.5708
 script = ExtResource( 1 )
 

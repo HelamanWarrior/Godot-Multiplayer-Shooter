@@ -38,10 +38,10 @@ func _physics_process(delta):
 			facing = look_at(playerSeeking.position)
 	
 
-sync func actualizar_posicion(pos):
+remote func actualizar_posicion(pos):
 	position=pos
 
-sync func actualizar_playerSeeking(p):
+remote func actualizar_playerSeeking(p):
 	playerSeeking=p
 
 sync func newPlayerSeeking(playerToSeek):
