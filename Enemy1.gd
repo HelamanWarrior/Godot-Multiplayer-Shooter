@@ -30,13 +30,17 @@ func _physics_process(delta):
 			facing = look_at(playerSeeking.position)
 			
 		if is_network_master():
-			rpc("posicion_actual",position)
+			rpc("actualizar_posicion",position)
+			rpc_unreliable("actualizar_playerSeeking",playerSeeking)
 		else:
 			pass
 	
 
-sync func posicion_actual(pos):
+sync func actualizar_posicion(pos):
 	position=pos
+
+sync func actualizar_playerSeeking(p):
+	playerSeeking=p
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
