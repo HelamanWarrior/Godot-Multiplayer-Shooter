@@ -24,16 +24,18 @@ func _physics_process(delta):
 	## EN TODOS LOS CLIENTES Y SERVIDOR
 	# movimiento
 
-		if playerSeeking:
+		
+			
+	if get_tree().is_network_server():
+		rpc("actualizar_posicion",position)
+		rpc_unreliable("actualizar_playerSeeking",playerSeeking)
+	else:
+		pass
+			
+	if playerSeeking:
 			dir = (playerSeeking.position - position).normalized()
 			velocity= move_and_slide(dir * speed).normalized()
 			facing = look_at(playerSeeking.position)
-			
-		if get_tree().is_network_server():
-			rpc("actualizar_posicion",position)
-			rpc_unreliable("actualizar_playerSeeking",playerSeeking)
-		else:
-			pass
 	
 
 sync func actualizar_posicion(pos):
