@@ -37,23 +37,18 @@ func _physics_process(delta):
 				dir = (playerSeeking.position - position).normalized()
 				velocity= move_and_slide(dir * speed).normalized()
 				facing = look_at(playerSeeking.position)
-				rset("puppet_position",position)
-				rset("puppet_playerSeeking",playerSeeking)
+				rpc("update_enemy",playerSeeking,dir)
 		else:  
-			print("NOT master, YES peer")
-			print("/////////  playerSeeking = ", playerSeeking)
-			print("/////////  puppet_playerSeeking = ",puppet_playerSeeking)
-			print("igualamos y volvemos a mostrar")
-			playerSeeking = puppet_playerSeeking
-			print("/////////  playerSeeking = ", playerSeeking)			
-			print("/////////  puppet_playerSeeking = ", puppet_playerSeeking)
+			pass
 			
 			
 #
 #			var dir = (playerSeeking.position - puppet_position).normalized()
 #			velocity= move_and_slide(dir * speed).normalized()
 #			facing = look_at(playerSeeking.position)
-
+sync func update_movement(p,d):
+	velocity = move_and_slide(d*speed).normalized()
+	facing= look_at(p.position).normalized()
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
