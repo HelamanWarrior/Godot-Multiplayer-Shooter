@@ -2,7 +2,6 @@ extends Node2D
 
 
 
-var enemy_scene = preload("res://Enemy1.tscn")
 
 var current_spawn_location_instance_number = 1
 var current_player_for_spawn_location_number = null
@@ -13,8 +12,6 @@ func _ready() -> void:
 
 	
 
-	$enemy_spawn_timer.start() # iniciamos el timer para spawnear enemigos
-	
 	
 	# Si el arbol de nodos actual tiene la conexión como servidor
 
@@ -23,7 +20,7 @@ func _ready() -> void:
 		setup_players_positions()
 
 	
-	$enemy_spawn_timer.start()
+	
 	
 
 		
@@ -50,36 +47,4 @@ func _player_disconnected(id) -> void:
 		Persistent_nodes.get_node(str(id)).queue_free()
 
 
-
-#  ---- ENEMIGOS ----
-#Ejecutamos la creación del enemigo en todos los clientes
-sync func instance_enemy1(id):
-	var enemy1_instance = Global.instance_node_at_location(enemy_scene,Persistent_nodes, random_spawn_enemy_position())
-	enemy1_instance.name = name + str(Network.networked_object_name_index)
-	enemy1_instance.set_network_master(1)
-	Network.networked_object_name_index += 1
-	
-
-# Cuando llega a 0 el timer que hemos creado para el spawn de enemigos
-func _on_enemy_spawn_timer_timeout():
-	# siempre desde el server
-	if (get_tree().is_network_server()):
-		# Llamamos a la funcion crear enemigo al cual le mandamos la id de quien lo crea
-		rpc("instance_enemy1",get_tree().get_network_unique_id())
-
-
-# El random habria que hacerlo como el de el player en Network. De moento se queda así
-var rng = RandomNumberGenerator.new()
-
-func random_spawn_enemy_position():
-	var randomPlace= rng.randi_range(1,4)
-
-	if (randomPlace==1):
-		return $Spawn_enemy/spawn.position
-	elif (randomPlace==2):
-		return $Spawn_enemy/spawn2.position
-	elif (randomPlace==3):
-		return $Spawn_enemy/spawn3.position
-	elif (randomPlace==4):
-		return $Spawn_enemy/spawn4.position
 
