@@ -15,8 +15,6 @@ __meta__ = {
 [node name="Multiplayer_configure" type="Control" parent="."]
 anchor_right = 1.0
 anchor_bottom = 1.0
-margin_left = 1.50745
-margin_right = 1.50745
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -95,41 +93,22 @@ __meta__ = {
 [node name="Spawn_locations" type="Node" parent="."]
 
 [node name="1" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 903.465, 507.034 )
+position = Vector2( 192, 192 )
 
 [node name="2" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 1022.56, 507.034 )
+position = Vector2( 1728, 192 )
 
 [node name="3" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 963.015, 641.188 )
+position = Vector2( 960, 192 )
 
 [node name="4" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 764.789, 668.392 )
+position = Vector2( 192, 896 )
 
 [node name="5" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 964.522, 779.935 )
+position = Vector2( 960, 896 )
 
 [node name="6" type="Position2D" parent="Spawn_locations"]
-position = Vector2( 1167.27, 659.348 )
-
-[node name="Spawn_enemies" type="Node" parent="."]
-
-[node name="e1" type="Position2D" parent="Spawn_enemies"]
-position = Vector2( 510.049, 29.2072 )
-
-[node name="e2" type="Position2D" parent="Spawn_enemies"]
-position = Vector2( 784.405, 30.7146 )
-
-[node name="e3" type="Position2D" parent="Spawn_enemies"]
-position = Vector2( 1064.01, 33.7292 )
-
-[node name="e4" type="Position2D" parent="Spawn_enemies"]
-position = Vector2( 1331.55, 33.8011 )
-
-[node name="EnemySpawnTimer" type="Timer" parent="."]
-wait_time = 9.183
-autostart = true
+position = Vector2( 1728, 896 )
 [connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
 [connection signal="pressed" from="Multiplayer_configure/Join_server" to="." method="_on_Join_server_pressed"]
 [connection signal="pressed" from="UI/Start_game" to="." method="_on_Start_game_pressed"]
-[connection signal="timeout" from="EnemySpawnTimer" to="." method="_on_EnemySpawnTimer_timeout"]
