@@ -11,7 +11,7 @@ var facing=0
 var dir
 
 
-puppet var puppet_position = Vector2()
+var puppet_position = Vector2()
 puppet var puppet_velocity = Vector2()
 puppet var puppet_rotation = 0
 puppet var puppet_playerSeeking = null
