@@ -33,23 +33,26 @@ func _physics_process(delta):
 #	if get_tree().has_network_peer():
 #		if is_network_master():
 	
-	
-
-	if is_network_master():
-		if (puppet_position!= position):
-			print("MASTER: no son iguales POSITION")
-		puppet_position=position
-		puppet_playerSeeking = playerSeeking
-	else:
-		if (puppet_position!= position):
-			print("PUPPET: no son iguales POSITION")
-		position=puppet_position	
+	## EN TODOS LOS CLIENTES Y SERVIDOR
+	# movimiento
+	if is_network_master():   # En el servidor
+		if playerSeeking:
+			dir = (playerSeeking.position - position).normalized()
+			velocity= move_and_slide(dir * speed).normalized()
+			facing = look_at(playerSeeking.position)
+		rset_unreliable("puppet_position",position)
+		rset_unreliable("puppet_playerSeeking" , playerSeeking)
+		
+		
+	else:	# En los clientes no servidor
+		
+		
 		playerSeeking = puppet_playerSeeking
-
-	if playerSeeking:
-		dir = (playerSeeking.position - position).normalized()
-		velocity= move_and_slide(dir * speed).normalized()
-		facing = look_at(playerSeeking.position)
+		if playerSeeking:
+			dir = (playerSeeking.position - puppet_position).normalized()
+			velocity= move_and_slide(dir * speed).normalized()
+			facing = look_at(playerSeeking.position)
+	
 
 sync func newPlayerSeeking(playerToSeek):
 	for child in Persistent_nodes.get_children():
