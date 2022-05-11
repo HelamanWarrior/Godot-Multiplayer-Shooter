@@ -143,13 +143,13 @@ func random_spawn_enemy_position():
 	var randomPlace= rng.randi_range(1,4)
 
 	if (randomPlace==1):
-		return $Spawn_enemy/spawn.position
+		return $Spawn_enemies/e1.position
 	elif (randomPlace==2):
-		return $Spawn_enemy/spawn2.position
+		return $Spawn_enemies/e2.position
 	elif (randomPlace==3):
-		return $Spawn_enemy/spawn3.position
+		return $Spawn_enemies/e3.position
 	elif (randomPlace==4):
-		return $Spawn_enemy/spawn4.position
+		return $Spawn_enemies/e4.position
 
 
 

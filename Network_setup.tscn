@@ -110,6 +110,20 @@ position = Vector2( 960, 896 )
 [node name="6" type="Position2D" parent="Spawn_locations"]
 position = Vector2( 1728, 896 )
 
+[node name="Spawn_enemies" type="Node" parent="."]
+
+[node name="e1" type="Position2D" parent="Spawn_enemies"]
+position = Vector2( 192, 192 )
+
+[node name="e2" type="Position2D" parent="Spawn_enemies"]
+position = Vector2( 1728, 192 )
+
+[node name="e3" type="Position2D" parent="Spawn_enemies"]
+position = Vector2( 960, 192 )
+
+[node name="e4" type="Position2D" parent="Spawn_enemies"]
+position = Vector2( 192, 896 )
+
 [node name="EnemySpawnTimer" type="Timer" parent="."]
 wait_time = 9.183
 [connection signal="pressed" from="Multiplayer_configure/Create_server" to="." method="_on_Create_server_pressed"]
