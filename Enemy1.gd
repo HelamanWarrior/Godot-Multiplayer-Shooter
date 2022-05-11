@@ -29,7 +29,7 @@ func _physics_process(delta):
 			velocity= move_and_slide(dir * speed).normalized()
 			facing = look_at(playerSeeking.position)
 			
-		if is_network_master():
+		if get_tree().is_network_server():
 			rpc("actualizar_posicion",position)
 			rpc_unreliable("actualizar_playerSeeking",playerSeeking)
 		else:
